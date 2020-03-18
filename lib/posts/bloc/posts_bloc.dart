@@ -26,6 +26,13 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     PostsEvent event,
   ) async* {
     if (event is FetchPosts) {
+      getUniqueNumber([
+        4,
+        5,
+        6,
+        5,
+        6,
+      ]);
       yield LoadingPosts();
       print('Fetching data');
       Response response = await _postsRepository.getAllPosts();
@@ -46,8 +53,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         Response commentsResponse =
             await _postsRepository.getPostComments(event.post.id);
         yield PostsDetailFetched(
-            postDetail: Post.fromJson(response.data),
-            commentsList: null);
+            postDetail: Post.fromJson(response.data), commentsList: null);
         if (commentsResponse.statusCode == 200) {
           yield PostsDetailFetched(
               postDetail: Post.fromJson(response.data),
@@ -66,19 +72,53 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       List<PostComment> dummySearchList = List<PostComment>();
       dummySearchList.addAll(event.postCommentList);
 
-      if(event.query.isNotEmpty) {
+      if (event.query.isNotEmpty) {
         List<PostComment> dummyListData = List<PostComment>();
         dummySearchList.forEach((item) {
-
-          if(item.name.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 0) dummyListData.add(item);
-          if(item.email.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 1) dummyListData.add(item);
-          if(item.body.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 2) dummyListData.add(item);
+          if (item.name.toLowerCase().contains(event.query.toLowerCase()) &&
+              event.searchFrom == 0) dummyListData.add(item);
+          if (item.email.toLowerCase().contains(event.query.toLowerCase()) &&
+              event.searchFrom == 1) dummyListData.add(item);
+          if (item.body.toLowerCase().contains(event.query.toLowerCase()) &&
+              event.searchFrom == 2) dummyListData.add(item);
         });
         yield SearchedComments(comments: dummyListData);
       } else {
         yield SearchedComments(comments: event.postCommentList);
       }
-
     }
+  }
+
+
+  List<int> getUniqueNumber(List<int> numarray) {
+    numarray.sort((a, b) {
+      return a.compareTo(b);
+    });
+
+    int existingNumber = numarray[0];
+    int count = 1;
+    for (int i = 1; i < numarray.length; i++) {
+      if (existingNumber == numarray[i]) continue;
+      else {
+        existingNumber = numarray[i];
+        count++;
+      }
+    }
+
+    List<int> result = new List(count);
+
+    count = 0;
+    existingNumber = numarray[0];
+    result[count++] = existingNumber;
+    for (int i = 1; i < numarray.length; i++) {
+      if (existingNumber == numarray[i]) continue;
+      else {
+        existingNumber = numarray[i];
+        result[count++] = existingNumber;
+      }
+    }
+
+    print(result);
+    return result;
   }
 }
