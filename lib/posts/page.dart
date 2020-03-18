@@ -48,14 +48,7 @@ class _PostsListState extends State<PostsList> {
                       fontSize: 20.0,
                     ),
                   ),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.search, color: Colors.red,),
-                      onPressed: () async {
-                        BlocProvider.of<PostsBloc>(context).add(FetchPosts());
-                      },
-                    ),
-                  ]),
+              ),
               body: Container(
                 color: Colors.white,
                 width: _width,

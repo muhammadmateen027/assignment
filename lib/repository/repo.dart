@@ -1,10 +1,4 @@
-
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:assignment/models/posts.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 
@@ -55,20 +49,4 @@ class PostsApiClient {
       return response;
     }
   }
-
-
-//
-//  Future<Weather> fetchWeather(int locationId) async {
-//    final weatherUrl = '$baseUrl/api/location/$locationId';
-//    final weatherResponse = await this.httpClient.get(weatherUrl);
-//
-//    if (weatherResponse.statusCode != 200) {
-//      throw Exception('error getting weather for location');
-//    }
-//
-//    final weatherJson = jsonDecode(weatherResponse.body);
-//    return Weather.fromJson(weatherJson);
-//  }
-
-
 }

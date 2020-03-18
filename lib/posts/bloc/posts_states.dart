@@ -57,3 +57,16 @@ class CommentsError extends PostsState {
   @override
   String toString() => 'CommentsError { error: $error }';
 }
+
+
+class SearchedComments extends PostsState {
+  List<PostComment> comments;
+
+  SearchedComments({@required this.comments,});
+
+  @override
+  List<Object> get props => [comments,];
+
+  @override
+  String toString() => 'SearchedComments { query: $comments }';
+}

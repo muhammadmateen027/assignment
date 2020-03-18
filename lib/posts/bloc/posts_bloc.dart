@@ -61,5 +61,24 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
             error:
                 "Unable to load post. Please check your internet connection and try again later.");
     }
+
+    if (event is SearchCommentEvent) {
+      List<PostComment> dummySearchList = List<PostComment>();
+      dummySearchList.addAll(event.postCommentList);
+
+      if(event.query.isNotEmpty) {
+        List<PostComment> dummyListData = List<PostComment>();
+        dummySearchList.forEach((item) {
+
+          if(item.name.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 0) dummyListData.add(item);
+          if(item.email.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 1) dummyListData.add(item);
+          if(item.body.toLowerCase().contains(event.query.toLowerCase()) && event.searchFrom == 2) dummyListData.add(item);
+        });
+        yield SearchedComments(comments: dummyListData);
+      } else {
+        yield SearchedComments(comments: event.postCommentList);
+      }
+
+    }
   }
 }

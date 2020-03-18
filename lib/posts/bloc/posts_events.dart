@@ -18,3 +18,18 @@ class FetchPostDetail extends PostsEvent {
   @override
   String toString() => 'FetchPostDetail { post: $post }';
 }
+
+
+class SearchCommentEvent extends PostsEvent {
+  List<PostComment> postCommentList;
+  String query;
+  int searchFrom;
+
+  SearchCommentEvent({@required this.postCommentList,@required this.query, @required this.searchFrom, });
+
+  @override
+  List<Object> get props => [postCommentList, query, searchFrom];
+
+  @override
+  String toString() => 'SearchCommentEvent { query: $query }';
+}
